@@ -29,7 +29,7 @@ hex characters => 17\*8/4 = 34
 
 8 bits for each byte and each hexadecimal character is 4 bits.
 
-**4. Convert the first 5 bytes in the file by hand to binary. Write these down as you’ll use them again in a later exercise
+**4. Convert the first 5 bytes in the file by hand to binary. Write these down as you’ll use them again in a later exercise**
 
 68656c6c6f
 
