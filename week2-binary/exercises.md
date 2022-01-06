@@ -19,7 +19,7 @@
 Should ideally be the same between hexadecimal and rgb\
 In hexadecimal => 16^6 = 16,777,216\
 In rgb => 256^3 = 16,777,216\
-In binary 2^(4\*6) = 16,777,216\
+In binary 2^(4\*6) = 16,777,216
 
 # Say hello to hellohex
 
