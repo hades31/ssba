@@ -186,7 +186,7 @@ In decimal -> 11*16^3 + 12*16^2 + 6 = 48134
 Data offset:\
 8 (data offset byte) \* 4 = 32
 
-Not too sure if this is the correct way to compute
+** Not too sure if this is the correct way to compute
 
 TCP header = 20 bytes, if this header is 32 bytes, it contains 32 - 20 = 12 bytes of optional data
 
@@ -271,6 +271,8 @@ Given that the smallest you can increase the mantissa by is the last bit, which 
 **27. What does this imply about the precision of IEEE Floating Point values?**
 
 It loses precision because of the maximum number of bits the 32 bit can represent.
+
+** Didn't really understand this part.
 
 **28. If you echo ☃ > snowman.txt how large do you expect this file to be, considering that the corresponding Unicode code point is U+2603?The echo command won’t write any header information to the file, so the first byte of the file will be the first byte of the snowman. It will however add a newline character at the end, so you may be off by one. The point of this question is to test that you understand a basic aspect of the UTF-8 encoding scheme, which requires multiple bytes to encode a Unicode snowman. Remember to check!**
 
