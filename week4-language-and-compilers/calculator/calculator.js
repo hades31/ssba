@@ -1,3 +1,5 @@
 const { scanner } = require('./scanner.js');
 
-scanner('1-(2+3)');
+let scannerObject = new scanner('1-(2+3)');
+scannerObject.scan();
+scannerObject.printTokens();
