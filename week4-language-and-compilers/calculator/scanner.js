@@ -8,47 +8,61 @@
 const BLANK_CHARACTERS = ['', '\s', '\t'];
 
 class Token {
-  constructor(character) {
+  constructor(character, tokenType) {
     this.character = character;
+    this.tokenType = tokenType;
   }
-  computeType() {
-    let trimmedCharacter = this.character.trim();
-    if (!isNaN(trimmedCharacter) && !BLANK_CHARACTERS.includes(trimmedCharacter)) {
-      return 'NUMBER';
-    }
+  printToken() {
+    console.log(`(${this.tokenType}, "${this.character}")`)
+  }
+}
+
+function scanToken(character) {
+  let tokenType = null;
+  let trimmedCharacter = character.trim();
+  if (!isNaN(trimmedCharacter) && !BLANK_CHARACTERS.includes(trimmedCharacter)) {
+    tokenType = 'NUMBER';
+  } else {
     switch(trimmedCharacter) {
       case '+':
-        return 'PLUS';
+        tokenType = 'PLUS';
+        break;
       case '-':
-        return 'MINUS';
+        tokenType = 'MINUS';
+        break;
       case '*':
-        return 'MULTIPLY';
+        tokenType = 'MULTIPLY';
+        break;
       case '/':
-        return 'DIVIDE';
+        tokenType = 'DIVIDE';
+        break;
       case '^':
-        return 'EXPONENT';
+        tokenType = 'EXPONENT';
+        break;
       case '(':
-        return 'LEFT_PAREN';
+        tokenType = 'LEFT_PAREN';
+        break;
       case ')':
-        return 'RIGHT_PAREN';
+        tokenType = 'RIGHT_PAREN';
+        break;
       case '':
       case '\r':
       case '\t':
-        return 'SPACE';
+        tokenType = 'SPACE';
+        break;
       default:
-        return 'INVALID_CHAR';
+        tokenType = 'INVALID_CHAR';
+        break;
     }
   }
-  printToken() {
-    console.log(`(${this.computeType()}, "${this.character}")`)
-  }
+  return new Token(character, tokenType);
 }
 
 exports.scanner = function(calculatorString) {
   let characterArray = calculatorString.split('');
   let tokens = [];
   while(characterArray.length) {
-    tokens.push(new Token(characterArray.shift()));
+    tokens.push(scanToken(characterArray.shift()));
   }
   tokens.forEach((t) => {
     t.printToken();
