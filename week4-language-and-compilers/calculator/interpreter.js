@@ -30,6 +30,27 @@ class Interpreter {
     return - (parseFloat(right));
   }
 
+  visitFunctionExpression(expression) {
+    let args = expression.args.map((arg) => { return arg.value; });
+    return this[expression.callee.value.character](...args);
+  }
+
+  sqrt(number) {
+    return Math.sqrt(number);
+  }
+
+  exp(number, power) {
+    return Math.pow(number, power);
+  }
+
+  fact(number) {
+    let total = 1;
+    for (let i = number; i >=1; i--) {
+      total *= i;
+    }
+    return total;
+  }
+
   evaluate(expression) {
     return expression.accept(this);
   }

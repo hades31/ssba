@@ -20,6 +20,10 @@ class AstPrinter {
     return this.parenthesize(expression.operator.character, expression.right);
   }
 
+  visitFunctionExpression(expression) {
+    return this.parenthesize(expression.callee.value.character, ...expression.args);
+  }
+
   parenthesize(name, ...expressions) {
     let builderString = `(${name}`
     expressions.forEach((expression) => {

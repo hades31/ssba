@@ -3,7 +3,7 @@ const { parser } = require('./parser.js');
 const { printer } = require('./printer.js');
 const { interpreter } = require('./interpreter.js');
 
-let expression = '5*(-2-(3+4))';
+let expression = 'fact(5)+exp(2,5)';
 let scannerObject = new scanner(expression);
 scannerObject.scan();
 

@@ -34,6 +34,8 @@ class Scanner {
     let trimmedCharacter = character.trim();
     if (this.isNumber(trimmedCharacter)) {
       this.pushNumberToken();
+    } else if (this.isChar(trimmedCharacter)) {
+      this.pushFunctionToken();
     } else {
       switch(trimmedCharacter) {
         case '+':
@@ -56,6 +58,9 @@ class Scanner {
           break;
         case ')':
           tokenType = 'RIGHT_PAREN';
+          break;
+        case ',':
+          tokenType = 'COMMA';
           break;
         case '':
         case '\r':
@@ -96,6 +101,19 @@ class Scanner {
     }
     let charString = this.source.substring(this.start, this.current);
     this.tokens.push(new Token(charString, 'NUMBER'));
+  }
+
+  isChar(characterString) {
+    return characterString && characterString.match(/[a-z]/i);
+  }
+
+  pushFunctionToken() {
+    while(this.isChar(this.peek())) {
+      this.advance();
+    }
+
+    let charString = this.source.substring(this.start, this.current);
+    this.tokens.push(new Token(charString, 'STRING'));
   }
 
   reachedEnd() {

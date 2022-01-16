@@ -9,6 +9,16 @@ class NumberLiteral {
   }
 }
 
+class StringLiteral {
+  constructor(value) {
+    this.value = value;
+  }
+  accept(printer) {
+    let printV = printer.visitLiteralExpression(this);
+    return printV;
+  }
+}
+
 class Grouping {
   constructor(expression) {
     this.value = "()";
@@ -37,6 +47,17 @@ class Unary {
   }
   accept(printer) {
     return printer.visitUnaryExpression(this);
+  }
+}
+
+class FunctionLiteral {
+  constructor(callee, paren, args) {
+    this.callee = callee;
+    this.paren = paren;
+    this.args = args;
+  }
+  accept(printer) {
+    return printer.visitFunctionExpression(this);
   }
 }
 
@@ -79,7 +100,30 @@ class Parser {
       let right = this.unary();
       return new Unary(operator, right);
     }
-    return this.primary();
+    return this.call();
+  }
+
+  call() {
+    let expression = this.primary();
+    while (true) {
+      if (this.match(['LEFT_PAREN'])) {
+        expression = this.finishCall(expression);
+      } else {
+        break;
+      }
+    }
+    return expression;
+  }
+
+  finishCall(callee) {
+    let args = [];
+    if (!this.checkType('RIGHT_PAREN')) {
+      do {
+        args.push(this.term());
+      } while(this.match(['COMMA']));
+    } 
+    let paren =  this.consume('RIGHT_PAREN', "Expect ')' after expression.");
+    return new FunctionLiteral(callee, paren, args);
   }
 
   primary() {
@@ -90,6 +134,9 @@ class Parser {
       let expression = this.term();
       this.consume('RIGHT_PAREN', "Expect ')' after expression.");
       return new Grouping(expression);
+    }
+    if (this.match(['STRING'])) {
+      return new StringLiteral(this.previous());
     }
   }
 
