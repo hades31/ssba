@@ -99,7 +99,7 @@ class Scanner {
   }
 
   reachedEnd() {
-    return this.current >= this.source.length - 1
+    return this.current >= this.source.length
   }
 
   scan() {

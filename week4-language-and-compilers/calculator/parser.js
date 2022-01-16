@@ -5,6 +5,13 @@ class NumberLiteral {
   }
 }
 
+class Grouping {
+  constructor(expression) {
+    this.value = "()";
+    this.expression = expression;
+  }
+}
+
 class Binary {
   constructor(left,  operator, right) {
     this.left = left;
@@ -17,32 +24,32 @@ class Parser {
   constructor(tokens) {
     this.tokens = tokens;
     this.current = 0;
+    this.expressions = [];
   }
 
   parse() {
-    return this.addSub();
+    return this.term();
   }
 
-  addSub() {
-    let expression = this.mulDiv();
+  term() {
+    let expression = this.factor();
 
     while(this.match(['PLUS', 'MINUS'])) {
       let operator = this.previous();
-      let right = this.mulDiv();
+      let right = this.factor();
       expression = new Binary(expression, operator, right);
     }
-    console.log(expression)
+    this.expressions.push(expression);
     return expression;
   }
 
-  mulDiv() {
+  factor() {
     let expression = this.primary();
     while(this.match(['MULTIPLY', 'DIVIDE'])) {
       let operator = this.previous();
       let right = this.primary();
       expression = new Binary(expression, operator, right);
     }
-    console.log(expression)
     return expression;
   }
 
@@ -50,11 +57,16 @@ class Parser {
     if (this.match(['NUMBER'])) {
       return new NumberLiteral(this.previous())
     }
-    // if (this.match(LEFT_PAREN)) {
-    //   let expression = expression();
-    //   consume(RIGHT_PAREN, "Expect ')' after expression.");
-    //   return new Expr.Grouping(expr);
-    // }
+    if (this.match(['LEFT_PAREN'])) {
+      let expression = this.term();
+      this.consume('RIGHT_PAREN', "Expect ')' after expression.");
+      return new Grouping(expression);
+    }
+  }
+
+  consume(tokenType, message) {
+    if (this.checkType(tokenType)) { return this.advance(); }
+    throw new Error(message);
   }
 
   match(tokenTypeArray) {
@@ -85,10 +97,6 @@ class Parser {
 
   atEnd() {
     return this.peek().tokenType === 'EOF';
-  }
-
-  printExpressions() {
-
   }
 }
 
