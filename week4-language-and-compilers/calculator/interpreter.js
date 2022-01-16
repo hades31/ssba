@@ -24,6 +24,12 @@ class Interpreter {
     return null;
   }
 
+  visitUnaryExpression(expression) {
+    let right = this.evaluate(expression.right);
+
+    return - (parseFloat(right));
+  }
+
   evaluate(expression) {
     return expression.accept(this);
   }

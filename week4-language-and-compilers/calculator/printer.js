@@ -15,6 +15,10 @@ class AstPrinter {
     if (expression.value === null) { return null; }
     return expression.value.toString();
   }
+ 
+  visitUnaryExpression(expression) {
+    return this.parenthesize(expression.operator.character, expression.right);
+  }
 
   parenthesize(name, ...expressions) {
     let builderString = `(${name}`

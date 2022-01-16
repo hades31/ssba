@@ -64,13 +64,22 @@ class Parser {
   }
 
   factor() {
-    let expression = this.primary();
+    let expression = this.unary();
     while(this.match(['MULTIPLY', 'DIVIDE'])) {
       let operator = this.previous();
-      let right = this.primary();
+      let right = this.unary();
       expression = new Binary(expression, operator, right);
     }
     return expression;
+  }
+
+  unary() {
+    if (this.match(['MINUS'])) {
+      let operator = this.previous();
+      let right = this.unary();
+      return new Unary(operator, right);
+    }
+    return this.primary();
   }
 
   primary() {
