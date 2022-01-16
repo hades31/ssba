@@ -1,7 +1,8 @@
 const { scanner } = require('./scanner.js');
 const { parser } = require('./parser.js');
+const { printer } = require('./printer.js');
 
-let expression = '(1+2)*4';
+let expression = '2*(5+3)';
 let scannerObject = new scanner(expression);
 scannerObject.scan();
 
@@ -12,4 +13,9 @@ scannerObject.printTokens();
 
 console.log("\nExpressions:");
 let parserObject = new parser(scannerObject.tokens);
-console.log(parserObject.parse());
+let ast = parserObject.parse();
+console.log(ast);
+
+console.log("\nPrinter:");
+let printerObject = new printer();
+console.log(printerObject.print(ast));

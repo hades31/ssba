@@ -3,12 +3,19 @@ class NumberLiteral {
   constructor(value) {
     this.value = Number(value.character);
   }
+  accept(printer) {
+    let printV = printer.visitLiteralExpression(this);
+    return printV;
+  }
 }
 
 class Grouping {
   constructor(expression) {
     this.value = "()";
     this.expression = expression;
+  }
+  accept(printer) {
+    return printer.visitGroupingExpression(this);
   }
 }
 
@@ -17,6 +24,9 @@ class Binary {
     this.left = left;
     this.operator = operator;
     this.right = right;
+  }
+  accept(printer) {
+    return printer.visitBinaryExpression(this);
   }
 }
 
