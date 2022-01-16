@@ -30,6 +30,16 @@ class Binary {
   }
 }
 
+class Unary {
+  constructor(operator, right) {
+    this.operator = operator;
+    this.right = right;
+  }
+  accept(printer) {
+    return printer.visitUnaryExpression(this);
+  }
+}
+
 class Parser {
   constructor(tokens) {
     this.tokens = tokens;
