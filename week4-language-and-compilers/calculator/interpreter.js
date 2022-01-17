@@ -54,6 +54,12 @@ class Interpreter {
   evaluate(expression) {
     return expression.accept(this);
   }
+
+  execute(astExpressions) {
+    return astExpressions.map((astExpression) => {
+      return this.evaluate(astExpression.expression);
+    });
+  }
 }
 
 exports.interpreter = Interpreter;

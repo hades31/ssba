@@ -62,6 +62,9 @@ class Scanner {
         case ',':
           tokenType = 'COMMA';
           break;
+        case ';':
+          tokenType = 'SEMICOLON';
+          break;
         case '':
         case '\r':
         case '\t':

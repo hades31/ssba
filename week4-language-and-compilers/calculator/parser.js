@@ -50,6 +50,15 @@ class Unary {
   }
 }
 
+class Statement {
+  constructor(expression) {
+    this.expression = expression;
+  }
+  accept(printer) {
+    return printer.visitStatementExpression(this);
+  }
+}
+
 class FunctionLiteral {
   constructor(callee, paren, args) {
     this.callee = callee;
@@ -69,7 +78,17 @@ class Parser {
   }
 
   parse() {
-    return this.term();
+    let statements = [];
+    while (!this.atEnd()) {
+      statements.push(this.statement());
+    }
+    return statements;
+  }
+
+  statement() {
+    let expression = this.term();
+    this.consume('SEMICOLON', "Expect ';' after expression.");
+    return new Statement(expression);
   }
 
   term() {

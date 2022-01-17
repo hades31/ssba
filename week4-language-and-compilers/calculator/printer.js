@@ -1,6 +1,8 @@
 class AstPrinter {
-  print(expression) {
-    return expression.accept(this);
+  print(astExpressions) {
+    return astExpressions.forEach((astExpression) => {
+      console.log(astExpression.expression.accept(this));
+    });
   }
 
   visitBinaryExpression(expression) {
@@ -22,6 +24,10 @@ class AstPrinter {
 
   visitFunctionExpression(expression) {
     return this.parenthesize(expression.callee.value.character, ...expression.args);
+  }
+
+  visitStatementExpression(expression) {
+    return this.parenthesize(expression.expression);
   }
 
   parenthesize(name, ...expressions) {

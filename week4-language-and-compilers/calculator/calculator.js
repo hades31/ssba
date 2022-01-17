@@ -3,7 +3,7 @@ const { parser } = require('./parser.js');
 const { printer } = require('./printer.js');
 const { interpreter } = require('./interpreter.js');
 
-let expression = 'fact(5)+exp(2,5)';
+let expression = 'fact(5)+exp(2,5);(1+2)*4;3+4/2;';
 let scannerObject = new scanner(expression);
 scannerObject.scan();
 
@@ -14,13 +14,16 @@ scannerObject.printTokens();
 
 console.log("\nExpressions:");
 let parserObject = new parser(scannerObject.tokens);
-let ast = parserObject.parse();
-console.log(ast);
+let astArray = parserObject.parse();
+console.log(astArray);
 
 console.log("\nPrinter:");
 let printerObject = new printer();
-console.log(printerObject.print(ast));
+printerObject.print(astArray);
 
 console.log("\nInterpreter:");
 let interpreterObject = new interpreter();
-console.log(interpreterObject.evaluate(ast));
+interpreterObject.execute(astArray).forEach((value) => {
+  console.log(value);
+});
+
