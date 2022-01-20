@@ -1,6 +1,7 @@
 
 class NumberLiteral {
   constructor(value) {
+    this.type = 'NUMBER';
     this.value = Number(value.character);
   }
   accept(printer) {
@@ -11,6 +12,7 @@ class NumberLiteral {
 
 class StringLiteral {
   constructor(value) {
+    this.type = 'STRING';
     this.value = value;
   }
   accept(printer) {
@@ -21,6 +23,7 @@ class StringLiteral {
 
 class Grouping {
   constructor(expression) {
+    this.type = 'GROUPING';
     this.value = "()";
     this.expression = expression;
   }
@@ -31,6 +34,7 @@ class Grouping {
 
 class Binary {
   constructor(left,  operator, right) {
+    this.type = 'BINARY';
     this.left = left;
     this.operator = operator;
     this.right = right;
@@ -42,6 +46,7 @@ class Binary {
 
 class Unary {
   constructor(operator, right) {
+    this.type = 'UNARY';
     this.operator = operator;
     this.right = right;
   }
